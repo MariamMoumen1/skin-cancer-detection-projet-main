@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/MariamMoumen1/skin-cancer-detection-projet-main.git'
+                git branch: 'main', url: 'https://github.com/MariamMoumen1/skin-cancer-detection-projet-main.git'
             }
         }
         stage('Build Frontend') {
