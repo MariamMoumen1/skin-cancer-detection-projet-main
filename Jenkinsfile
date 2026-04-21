@@ -8,38 +8,38 @@ pipeline {
         }
         stage('Build Frontend') {
             steps {
-                bat 'docker build -f Dockerfile.frontend -t skin-cancer-frontend:latest .'
+                sh 'docker build -f Dockerfile.frontend -t skin-cancer-frontend:latest .'
             }
         }
         stage('Build Backend') {
             steps {
-                bat 'docker build -f Dockerfile.backend -t skin-cancer-backend:latest .'
+                sh 'docker build -f Dockerfile.backend -t skin-cancer-backend:latest .'
             }
         }
         stage('Deploy MySQL') {
             steps {
-                bat 'kubectl apply -f k8s/mysql-deployment.yaml'
-                bat 'kubectl apply -f k8s/mysql-service.yaml'
+                sh 'kubectl apply -f k8s/mysql-deployment.yaml'
+                sh 'kubectl apply -f k8s/mysql-service.yaml'
             }
         }
         stage('Deploy Backend') {
             steps {
-                bat 'kubectl apply -f k8s/backend-deployment.yaml'
-                bat 'kubectl apply -f k8s/backend-service.yaml'
+                sh 'kubectl apply -f k8s/backend-deployment.yaml'
+                sh 'kubectl apply -f k8s/backend-service.yaml'
             }
         }
         stage('Deploy Frontend') {
             steps {
-                bat 'kubectl apply -f k8s/frontend-deployment.yaml'
-                bat 'kubectl apply -f k8s/frontend-service.yaml'
+                sh 'kubectl apply -f k8s/frontend-deployment.yaml'
+                sh 'kubectl apply -f k8s/frontend-service.yaml'
             }
         }
         stage('Verify Deployment') {
             steps {
-                bat 'kubectl rollout status deployment/frontend'
-                bat 'kubectl rollout status deployment/backend'
-                bat 'kubectl get pods'
-                bat 'kubectl get services'
+                sh 'kubectl rollout status deployment/frontend'
+                sh 'kubectl rollout status deployment/backend'
+                sh 'kubectl get pods'
+                sh 'kubectl get services'
             }
         }
     }
